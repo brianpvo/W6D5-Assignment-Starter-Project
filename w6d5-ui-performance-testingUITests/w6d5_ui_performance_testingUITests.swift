@@ -27,6 +27,7 @@ class w6d5_ui_performance_testingUITests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        deleteAllMeals()
     }
     
     func testExample() {
@@ -63,6 +64,14 @@ class w6d5_ui_performance_testingUITests: XCTestCase {
         textField.tap()
         textField.typeText(String(numberOfCalories))
         addAMealAlert.buttons["Ok"].tap()
+    }
+    
+    func deleteAllMeals() {
+        let tableCells = app.tables.cells
+        while tableCells.count > 0 {
+            tableCells.element(boundBy: 0).swipeLeft()
+            app.tables.buttons["Delete"].tap()
+        }
     }
     
 }
