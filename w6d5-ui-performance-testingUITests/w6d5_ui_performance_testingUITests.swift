@@ -30,11 +30,26 @@ class w6d5_ui_performance_testingUITests: XCTestCase {
     }
     
     func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        
         addNewMeal(mealName: "Burger", numberOfCalories: 300)
+    }
+    
+    func testShowMealDetail()  {
+        app.tables/*@START_MENU_TOKEN@*/.staticTexts["Burger - 300"]/*[[".cells.staticTexts[\"Burger - 300\"]",".staticTexts[\"Burger - 300\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        XCTAssert(app.staticTexts["detailViewControllerLabel"].label == "Burger - 300", "Expected to be displaying Burger - 300")
+        app.navigationBars["Detail"].buttons["Master"].tap()
         
+    }
+    
+    func testDeleteMeal() {
+        deleteMeal(mealName: "Burger", numberOfCalories: 300)
+    }
+    
+    func deleteMeal(mealName: String, numberOfCalories: Int) {
+        let staticText = app.tables.staticTexts["\(mealName) - \(numberOfCalories)"]
+        if staticText.exists {
+            staticText.swipeLeft()
+            app.tables.buttons["Delete"].tap()
+        }
     }
     
     func addNewMeal(mealName: String, numberOfCalories: Int) {
